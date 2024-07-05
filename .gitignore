@@ -1,3 +1,4 @@
 .idea
 venv
-.env/.env
+api/stations/.env/.env
+api/stations/.env/.dev.env
