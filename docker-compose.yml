@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+  proxy:
+    depends_on:
+      - stations
+      - auth
+    build:
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "443:443"
+
+  stations:
+    env_file:
+      - ./api/stations/.env/.env
+    build:
+      dockerfile: ./api/stations/Dockerfile
+    depends_on:
+      postgres_stations:
+          condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  postgres_stations:
+    image: postgres:16.1-alpine3.19
+    restart: always
+    env_file:
+      - api/stations/postgres/.database.env
+    volumes:
+      - /var/lib/metro_server_alarm_db/stations_db:/var/lib/postgresql/data
+      - .api/stations/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      # ADD VOLUME FILE WITH DB INIT SCRIPT
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  auth:
+    env_file:
+      - ./api/auth/.env/.env
+    build:
+      dockerfile: ./api/auth/Dockerfile
+    depends_on:
+      postgres_auth:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+
+  postgres_auth:
+    image: postgres:16.1-alpine3.19
+    restart: always
+    env_file:
+      - ./api/auth/postgres/.database.env
+    volumes:
+      - /var/lib/metro_server_alarm_db/auth_db:/var/lib/postgresql/data
+      - ./api/auth/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      # ADD VOLUME FILE WITH DB INIT SCRIPT
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5431:5431"
