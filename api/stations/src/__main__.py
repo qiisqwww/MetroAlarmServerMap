@@ -1,15 +1,19 @@
-from fastapi import FastAPI
+import asyncio
 
-from api.stations.src.config import DEBUG, PROJECT_NAME, DOCS_URL, OPENAPI_URL
+import uvicorn
+
+from api.auth.src.app import app
+from api.auth.src.config import HTTP_HOST, HTTP_PORT, configurate_logger
 
 
-openapi_url = OPENAPI_URL if DEBUG else None
+async def main() -> None:
+    configurate_logger()
 
-app = FastAPI(
-    title=PROJECT_NAME,
-    debug=DEBUG,
-    docs_url=DOCS_URL,
-    openapi_url=openapi_url
-)
+    server_config = uvicorn.Config(app, host=HTTP_HOST, port=HTTP_PORT)
+    server = uvicorn.Server(server_config)
 
-"""NEED TO INCLUDE MIDDLEWARES & ROUTERS TO app OBJECT"""
+    await server.serve()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

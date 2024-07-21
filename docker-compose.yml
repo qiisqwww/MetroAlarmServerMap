@@ -12,9 +12,9 @@ services:
 
   stations:
     env_file:
-      - ./api/stations/.env/.env
+      - api/stations/.env/.env
     build:
-      dockerfile: ./api/stations/Dockerfile
+      dockerfile: api/stations/Dockerfile
     depends_on:
       postgres_stations:
           condition: service_healthy
@@ -36,13 +36,13 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "5432:5432"
+      - "5431:5431"
 
   auth:
     env_file:
-      - ./api/auth/.env/.env
+      - api/auth/.env/.env
     build:
-      dockerfile: ./api/auth/Dockerfile
+      dockerfile: api/auth/Dockerfile
     depends_on:
       postgres_auth:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
     image: postgres:16.1-alpine3.19
     restart: always
     env_file:
-      - ./api/auth/postgres/.database.env
+      - api/auth/postgres/.database.env
     volumes:
       - /var/lib/metro_server_alarm_db/auth_db:/var/lib/postgresql/data
       - ./api/auth/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
@@ -64,4 +64,4 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "5431:5431"
+      - "5432:5432"
