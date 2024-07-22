@@ -5,3 +5,5 @@ api/stations/.env/.dev.env
 api/auth/.env/.env
 api/auth/.env/.dev.env
 *.env
+*.csr
+*.key
