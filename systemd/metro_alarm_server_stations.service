@@ -1,0 +1,9 @@
+[Unit]
+After=network.target
+Description=Metro Alarm Server (stations microservice)
+
+[Service]
+Type=simple
+ExecStart=/var/www/MetroAlarmServerStations/scripts/start.sh
+ExecStop=/var/www/MetroAlarmServerStations/scripts/down.sh
+Restart=always
