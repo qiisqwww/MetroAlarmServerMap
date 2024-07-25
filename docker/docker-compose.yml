@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  proxy:
+    depends_on:
+      - stations
+    build:
+      dockerfile: ./nginx/Dockerfile
+      context: ../nginx
+    ports:
+      - "443:443"
+
+  stations:
+    env_file:
+      - ../.env/.env
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+          condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: postgres:16.1-alpine3.19
+    restart: always
+    env_file:
+      - ../postgres/.database.env
+    volumes:
+      - /var/lib/metro_server_alarm_db/stations_db:/var/lib/postgresql/data
+      - ../postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5431:5431"

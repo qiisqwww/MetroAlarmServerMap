@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from api.stations.src.config import DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_HOST
+from src.config import DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_HOST
 
 __all__ = [
     "Base",

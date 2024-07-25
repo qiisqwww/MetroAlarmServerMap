@@ -1,9 +1,5 @@
 .idea
 venv
-api/stations/.env/.env
-api/stations/.env/.dev.env
-api/auth/.env/.env
-api/auth/.env/.dev.env
 *.env
 *.csr
 *.key

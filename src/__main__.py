@@ -2,8 +2,8 @@ import asyncio
 
 import uvicorn
 
-from api.auth.src.app import app
-from api.auth.src.config import HTTP_HOST, HTTP_PORT, configurate_logger
+from src.app import app
+from src.config import HTTP_HOST, HTTP_PORT, configurate_logger
 
 
 async def main() -> None:

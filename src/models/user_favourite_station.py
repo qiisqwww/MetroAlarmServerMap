@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from api.stations.src.database import Base
+from src.database import Base
 
 __all__ = [
     "UserFavouriteStation"

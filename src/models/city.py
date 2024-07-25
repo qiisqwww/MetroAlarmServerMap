@@ -1,14 +1,13 @@
 from sqlalchemy import Column, Integer, String
-
-from api.stations.src.database import Base
+from src.database import Base
 
 __all__ = [
-    "Line"
+    "City"
 ]
 
 
-class Line(Base):
-    __tablename__ = "lines"
+class City(Base):
+    __tablename__ = "cities"
 
     id = Column(Integer, primary_key=True, unique=True, nullable=False)
     name = Column(String, nullable=False)

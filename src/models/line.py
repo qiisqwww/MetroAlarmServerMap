@@ -1,14 +1,14 @@
-from pygments.lexers import q
 from sqlalchemy import Column, Integer, String
-from api.stations.src.database import Base
+
+from src.database import Base
 
 __all__ = [
-    "City"
+    "Line"
 ]
 
 
-class City(Base):
-    __tablename__ = "cities"
+class Line(Base):
+    __tablename__ = "lines"
 
     id = Column(Integer, primary_key=True, unique=True, nullable=False)
     name = Column(String, nullable=False)
