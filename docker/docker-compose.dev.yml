@@ -12,9 +12,9 @@ services:
 
   stations:
     env_file:
-      - ../.env/.env
+      - ../.env/.dev.env
     build:
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.dev
       context: ../
     command: ["/app/scripts/app.sh"]
     volumes:
