@@ -14,7 +14,10 @@ __all__ = [
     "DB_NAME",
     "DB_PORT",
     "DB_PASS",
-    "DB_USER"
+    "DB_USER",
+    "APP_VERSION",
+    "MSC_MAP_VERSION",
+    "SPB_MAP_VERSION"
 ]
 
 
@@ -34,3 +37,7 @@ DB_PASS: str = StrEnv("DB_PASS")
 DB_NAME: str = StrEnv("DB_NAME")
 DB_PORT: int = IntEnv("DB_PORT")
 DB_HOST: str = StrEnv("DB_HOST")
+
+APP_VERSION: str = StrEnv("APP_VERSION")
+MSC_MAP_VERSION: str = StrEnv("MSC_MAP_VERSION")
+SPB_MAP_VERSION: str = StrEnv("SPB_MAP_VERSION")

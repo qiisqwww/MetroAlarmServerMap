@@ -5,12 +5,12 @@ from fastapi import Depends
 
 from src.database import get_async_session
 from src.schemas import CityStationsMap, CityBase, LineBase, StationBase
-from src.models import City, Line, Station
+from src.models import City, Line, Station, UserFavouriteStation
 from src.city_alias import CityAlias
 
 __all__ = [
     "CityStationsMapService",
-    "get_city_stations_service"
+    "get_city_stations_map_service"
 ]
 
 
@@ -31,5 +31,5 @@ class CityStationsMapService:
         pass
 
 
-def get_city_stations_service(session: AsyncSession = Depends(get_async_session)) -> CityStationsMapService:
+def get_city_stations_map_service(session: AsyncSession = Depends(get_async_session)) -> CityStationsMapService:
     return CityStationsMapService(session=session)

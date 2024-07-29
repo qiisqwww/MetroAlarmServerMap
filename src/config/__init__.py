@@ -10,7 +10,10 @@ from .config import (
     DB_PASS,
     DB_NAME,
     DB_HOST,
-    DB_USER
+    DB_USER,
+    APP_VERSION,
+    MSC_MAP_VERSION,
+    SPB_MAP_VERSION
 )
 from .logger_config import configurate_logger
 
@@ -27,5 +30,8 @@ __all__ = [
     "DB_PASS",
     "DB_NAME",
     "DB_PORT",
+    "APP_VERSION",
+    "MSC_MAP_VERSION",
+    "SPB_MAP_VERSION",
     "configurate_logger"
 ]

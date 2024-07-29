@@ -1,6 +1,7 @@
 .idea
 /logs
+/postgres/data
 *.env
-*.csr
+*.crt
 *.key
 *.log

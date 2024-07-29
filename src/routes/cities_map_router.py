@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from src.schemas import CityStationsMap
-from src.city_stations_map_service import CityStationsMapService, get_city_stations_service
+from src.city_stations_map_service import CityStationsMapService, get_city_stations_map_service
 from src.city_alias import CityAlias
 
 __all__ = [
@@ -12,22 +12,22 @@ __all__ = [
 
 
 cities_map_router = APIRouter(
-    prefix="map",
+    prefix="/map",
 )
 
 
 @cities_map_router.get("/full")
 async def get_full_map(
-        city_stations_service: CityStationsMapService = Depends(get_city_stations_service)
+        city_stations_service: CityStationsMapService = Depends(get_city_stations_map_service)
 ) -> List[CityStationsMap]:
     return await city_stations_service.get_full_map()
 
 
-#  city_name must be a query parameter.
+#  city_alias must be a query parameter.
 @cities_map_router.get("/city/")
 async def get_city_map(
         city_alias: CityAlias,
-        city_stations_service: CityStationsMapService = Depends(get_city_stations_service)
+        city_stations_service: CityStationsMapService = Depends(get_city_stations_map_service)
 ) -> CityStationsMap:
     city = await city_stations_service.find_city_by_city_alias(city_alias)
     if not city:

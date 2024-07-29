@@ -11,11 +11,11 @@ services:
       - "443:443"
 
   stations:
-    env_file:
-      - ../.env/.dev.env
     build:
       dockerfile: ./docker/Dockerfile.dev
       context: ../
+    env_file:
+      - ../.env/.dev.env
     command: ["/app/scripts/app.sh"]
     volumes:
       - ../alembic/versions:/app/alembic/versions
@@ -30,9 +30,9 @@ services:
     image: postgres:16.1-alpine3.19
     restart: always
     env_file:
-      - ../.env/.database.env
+      - ../.env/.database.dev.env
     volumes:
-      - /var/lib/metro_server_alarm_db/stations_db:/var/lib/postgresql/data
+      - ../postgres/data:/var/lib/postgresql/data
       - ../postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
