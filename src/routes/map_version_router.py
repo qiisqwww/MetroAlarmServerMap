@@ -2,28 +2,28 @@ from fastapi import APIRouter
 
 from src.city_alias import CityAlias
 from src.config import (
-    APP_VERSION,
+    MAP_VERSION,
     MSC_MAP_VERSION,
     SPB_MAP_VERSION
 )
 
 __all__ = [
-    "version_router"
+    "map_version_router"
 ]
 
 
-version_router = APIRouter(
+map_version_router = APIRouter(
     prefix="/version",
 )
 
 
-@version_router.get("/app")
-async def get_app_version() -> dict:
-    return {"app_version": APP_VERSION}
+@map_version_router.get("/full")
+async def get_data_version() -> dict:
+    return {"map_version": MAP_VERSION}
 
 
 #  city_alias must be a query parameter.
-@version_router.get("/city/")
+@map_version_router.get("/city/")
 async def get_city_version(city_alias: CityAlias) -> dict:
     match city_alias:
         case CityAlias.Moscow:

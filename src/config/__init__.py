@@ -11,7 +11,7 @@ from .config import (
     DB_NAME,
     DB_HOST,
     DB_USER,
-    APP_VERSION,
+    MAP_VERSION,
     MSC_MAP_VERSION,
     SPB_MAP_VERSION
 )
@@ -30,7 +30,7 @@ __all__ = [
     "DB_PASS",
     "DB_NAME",
     "DB_PORT",
-    "APP_VERSION",
+    "MAP_VERSION",
     "MSC_MAP_VERSION",
     "SPB_MAP_VERSION",
     "configurate_logger"

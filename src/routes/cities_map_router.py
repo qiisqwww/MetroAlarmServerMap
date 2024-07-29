@@ -11,9 +11,7 @@ __all__ = [
 ]
 
 
-cities_map_router = APIRouter(
-    prefix="/map",
-)
+cities_map_router = APIRouter()
 
 
 @cities_map_router.get("/full")

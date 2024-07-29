@@ -32,7 +32,7 @@ services:
     env_file:
       - ../.env/.database.env
     volumes:
-      - /var/lib/metro_server_alarm_db/stations_db:/var/lib/postgresql/data
+      - /var/lib/metro_server_alarm_db/map_db:/var/lib/postgresql/data
       - ../postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from src.config import DEBUG, PROJECT_NAME, DOCS_URL, OPENAPI_URL
 from src.catch_exception_middleware import catch_exception_middleware
-from src.routes import cities_map_router, version_router
+from src.routes import root_router
 
 __all__ = [
     "app"
@@ -19,5 +19,4 @@ app = FastAPI(
 )
 
 app.middleware("http")(catch_exception_middleware)
-app.include_router(cities_map_router)
-app.include_router(version_router)
+app.include_router(root_router)
