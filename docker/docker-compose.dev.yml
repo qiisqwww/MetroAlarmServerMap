@@ -1,14 +1,14 @@
 version: '3.9'
 
 services:
-  proxy:
-    depends_on:
-      - metro_alarm_server_map
-    build:
-      dockerfile: Dockerfile
-      context: ../nginx
-    ports:
-      - "443:443"
+#  proxy:
+#    depends_on:
+#      - metro_alarm_server_map
+#    build:
+#      dockerfile: Dockerfile
+#      context: ../nginx
+#    ports:
+#      - "443:443"
 
   metro_alarm_server_map:
     build:
@@ -23,10 +23,10 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      postgres:
+      postgres_map:
         condition: service_healthy
 
-  postgres:
+  postgres_map:
     image: postgres:16.1-alpine3.19
     restart: always
     env_file:
