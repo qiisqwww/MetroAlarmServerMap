@@ -3,14 +3,14 @@ version: '3.9'
 services:
   proxy:
     depends_on:
-      - map
+      - metro_alarm_server_map
     build:
       dockerfile: Dockerfile
       context: ../nginx
     ports:
       - "443:443"
 
-  map:
+  metro_alarm_server_map:
     build:
       dockerfile: ./docker/Dockerfile.dev
       context: ../

@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "metroalarmserverstations"
+name = "metroalarmservermap"
 version = "0.1.0"
-description = ""
+description = "FastAPI server for Metro Alarm application (map microservice)"
 authors = ["qiisqwww <qiisqwww@gmail.com>"]
 readme = "README.md"
 
