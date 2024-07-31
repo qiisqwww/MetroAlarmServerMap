@@ -1,18 +1,11 @@
 version: '3.9'
 
 services:
-  proxy:
-    depends_on:
-      - metro_alarm_server_map
-    build:
-      dockerfile: Dockerfile
-      context: ../nginx
-    ports:
-      - "443:443"
-
   metro_alarm_server_map:
     env_file:
       - ../.env/.env
+    networks:
+      - msa
     build:
       dockerfile: ./docker/Dockerfile
       context: ../
@@ -20,14 +13,15 @@ services:
     volumes:
       - ../alembic/versions:/app/alembic/versions
       - ../logs:/app/logs
-    ports:
-      - "8080:8080"
     depends_on:
       postgres_map:
         condition: service_healthy
 
+
   postgres_map:
     image: postgres:16.1-alpine3.19
+    networks:
+      - msa
     restart: always
     env_file:
       - ../.env/.database.env
@@ -39,5 +33,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - "5432:5432"
+
+
+networks:
+  msa:
+    driver: bridge
+    external: true
