@@ -8,7 +8,8 @@ from src.config import DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_HOST
 
 __all__ = [
     "Base",
-    "get_async_session"
+    "get_async_session",
+    "async_session_maker"
 ]
 
 
