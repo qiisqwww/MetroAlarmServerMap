@@ -24,5 +24,5 @@ class Station(Base):
     first_neighbour_id = Column(Integer, ForeignKey("stations.id"), nullable=False)
     second_neighbour_id = Column(Integer, ForeignKey("stations.id"), nullable=False)
 
-    radius = Column(Integer, nullable=False)
-    radius_rate = Column(Float, nullable=False)
+    radius = Column(Integer, nullable=False, default=400)
+    radius_rate = Column(Float, nullable=False, default=0)

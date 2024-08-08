@@ -12,3 +12,5 @@ class Line(Base):
 
     id = Column(Integer, primary_key=True, unique=True, nullable=False)
     name = Column(String, nullable=False)
+    alias = Column(String, nullable=False)
+    logo_path = Column(String, nullable=False)

@@ -28,6 +28,7 @@ async def set_database_base_values() -> None:
 
 
 async def database_already_filled(session: AsyncSession) -> bool:
+    # If amount of cities added to db is bigger than zero, that means that basic values have already been set
     stmt = select(City)
     cities_to_check = [city for city in await session.scalars(stmt)]
 
@@ -41,7 +42,12 @@ async def insert_cities_into_database(session: AsyncSession) -> list[City]:
     for city_alias in CityAlias:
         with open(f"{city_alias}_map.json", "r") as file:
             map_data = json.load(file)
-            city = City(id=map_data["city"]["id"], name=map_data["city"]["name"])
+            city = City(
+                id=map_data["city"]["id"],
+                name=map_data["city"]["name"],
+                name_eng=map_data["city"]["name_eng"],
+                alias=map_data["city"]["alias"]
+            )
             session.add(city)
 
     # Returning data about cities
@@ -60,7 +66,12 @@ async def insert_lines_into_database(session: AsyncSession) -> list[Line]:
             map_data = json.load(file)
             lines = []
             for line in map_data["lines"]:
-                lines.append(Line(id=line["id"], name=line["name"]))
+                lines.append(Line(
+                    id=line["id"],
+                    name=line["name"],
+                    alias=line["alias"],
+                    logo_path=line["logo_path"]
+                ))
             session.add_all(lines)
             await session.commit()
 
@@ -88,13 +99,12 @@ async def insert_stations_into_database(session: AsyncSession) -> list[Station]:
                     line_id=station["line_id"],
                     city_id=map_data["city"]["id"],
                     first_neighbour_id=station["first_neighbour_id"],
-                    second_neighbour_id=station["second_neighbour_id"],
-                    radius=400,
-                    radius_rate=0
+                    second_neighbour_id=station["second_neighbour_id"]
                 ))
             session.add(stations)
             await session.commit()
 
+    # Returning data about stations
     stmt = select(Station)
     stations_return = [station for station in await session.scalars(stmt)]
 
