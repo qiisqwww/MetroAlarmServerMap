@@ -12,6 +12,7 @@ services:
     command: ["/app/scripts/app.sh"]
     volumes:
       - ../alembic/versions:/app/alembic/versions
+      - ../maps:/app/maps
       - ../logs:/app/logs
     depends_on:
       postgres_map:

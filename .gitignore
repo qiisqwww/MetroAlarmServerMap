@@ -1,7 +1,7 @@
 .idea
 /logs
 /postgres/data
-/postgres/maps
+/maps
 *.env
 *.crt
 *.key

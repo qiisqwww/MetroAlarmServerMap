@@ -16,7 +16,7 @@ __all__ = [
 async def set_database_base_values() -> None:
     async with async_session_maker() as session:
         if await database_already_filled(session):
-            logger.info("Database already filled. Skipping...")
+            logger.info("Database already filled. Skipping process...")
             return
         logger.info("Database is not filled. Setting database base values...")
 
@@ -40,7 +40,7 @@ async def insert_cities_into_database(session: AsyncSession) -> list[City]:
 
     # Inserting cities
     for city_alias in CityAlias:
-        with open(f"{city_alias}_map.json", "r") as file:
+        with open(f"maps/{city_alias}_map.json", "r") as file:
             map_data = json.load(file)
             city = City(
                 id=map_data["city"]["id"],
@@ -62,15 +62,14 @@ async def insert_lines_into_database(session: AsyncSession) -> list[Line]:
 
     # Inserting lines
     for city_alias in CityAlias:
-        with open(f"{city_alias}_map.json", "r") as file:
+        with open(f"maps/{city_alias}_map.json", "r") as file:
             map_data = json.load(file)
             lines = []
             for line in map_data["lines"]:
                 lines.append(Line(
-                    id=line["id"],
+                    id=int(line["id"]),
                     name=line["name"],
-                    alias=line["alias"],
-                    logo_path=line["logo_path"]
+                    alias=line["alias"]
                 ))
             session.add_all(lines)
             await session.commit()
@@ -87,7 +86,7 @@ async def insert_stations_into_database(session: AsyncSession) -> list[Station]:
 
     # Inserting stations
     for city_alias in CityAlias:
-        with open(f"{city_alias}_map.json", "r") as file:
+        with open(f"maps/{city_alias}_map.json", "r") as file:
             map_data = json.load(file)
             stations = []
             for station in map_data["stations"]:
@@ -98,10 +97,10 @@ async def insert_stations_into_database(session: AsyncSession) -> list[Station]:
                     longitude=station["longitude"],
                     line_id=station["line_id"],
                     city_id=map_data["city"]["id"],
-                    first_neighbour_id=station["first_neighbour_id"],
-                    second_neighbour_id=station["second_neighbour_id"]
+                    first_neighbour_id=station["id_neighbour1"] if station["id_neighbour1"] != 0 else None,
+                    second_neighbour_id=station["id_neighbour2"] if station["id_neighbour2"] != 0 else None
                 ))
-            session.add(stations)
+            session.add_all(stations)
             await session.commit()
 
     # Returning data about stations
