@@ -8,3 +8,5 @@ __all__ = [
 class CityBase(BaseModel):
     id: int
     name: str
+    name_eng: str
+    alias: str

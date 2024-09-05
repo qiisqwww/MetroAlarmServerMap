@@ -8,3 +8,5 @@ __all__ = [
 class LineBase(BaseModel):
     id: int
     name: str
+    alias: str
+    logo_path: str

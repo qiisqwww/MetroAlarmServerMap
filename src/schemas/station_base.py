@@ -14,6 +14,5 @@ class StationBase(BaseModel):
     city_id: int
     first_neighbour_id: int
     second_neighbour_id: int
-    alarm_set: int
     is_favourite: bool
     radius: int

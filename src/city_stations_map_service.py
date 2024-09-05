@@ -1,10 +1,9 @@
-from typing import List
-
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql import select
 from fastapi import Depends
 
 from src.database import get_async_session
-from src.schemas import CityStationsMap, CityBase, LineBase, StationBase
+from src.schemas import CityStationsMap, CitiesStationsMap, CityBase, LineBase, StationBase
 from src.models import City, Line, Station, UserFavouriteStation
 from src.city_alias import CityAlias
 
@@ -21,14 +20,17 @@ class CityStationsMapService:
         self.model = CityStationsMap
         self.session = session
 
-    async def get_full_map(self) -> List[CityStationsMap]:
-        pass
+    async def get_full_map(self) -> CitiesStationsMap:
+        stmt_cities = select(City)
+        stmt_lines = select(Line)
+        stmt_stations = select(Station)
 
-    async def find_city_by_city_alias(self, city_alias: CityAlias) -> CityBase | None:
-        pass
+        cities = [city for city in await self.session.scalars(stmt_cities)]
+        lines = [line for line in await self.session.scalars(stmt_lines)]
+        raw_stations = [station for station in await self.session.scalars(stmt_stations)]
 
-    async def get_city_stations_map_by_city_name(self, city_name: str) -> CityStationsMap:
-        pass
+    async def get_city_stations_map_by_city_alias(self, city_alias: CityAlias) -> CityStationsMap:
+        city_name = city_alias.translation
 
 
 def get_city_stations_map_service(session: AsyncSession = Depends(get_async_session)) -> CityStationsMapService:
