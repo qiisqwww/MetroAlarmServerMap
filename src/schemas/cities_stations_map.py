@@ -10,6 +10,6 @@ __all__ = [
 
 
 class CitiesStationsMap(BaseModel):
-    city: list[CityBase]
+    cities: list[CityBase]
     lines: list[LineBase]
     stations: list[StationBase]

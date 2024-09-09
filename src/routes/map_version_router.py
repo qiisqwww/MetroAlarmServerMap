@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from typing import Annotated
+
+from fastapi import APIRouter, Path
 
 from src.city_alias import CityAlias
 from src.config import (
@@ -22,9 +24,8 @@ async def get_data_version() -> dict:
     return {"map_version": MAP_VERSION}
 
 
-#  city_alias must be a query parameter.
-@map_version_router.get("/city/")
-async def get_city_version(city_alias: CityAlias) -> dict:
+@map_version_router.get("/city/{city_alias}")
+async def get_city_version(city_alias: Annotated[CityAlias, Path(title="Alias of the city")]) -> dict:
     match city_alias:
         case CityAlias.Moscow:
             return {"msc_map_version": MSC_MAP_VERSION}
