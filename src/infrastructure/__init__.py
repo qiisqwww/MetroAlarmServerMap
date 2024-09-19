@@ -1,10 +1,8 @@
-from .app import app
-from .catch_exception_middleware import catch_exception_middleware
-from .database import get_async_session, async_session_maker
+from src.infrastructure.app import app_object
+from src.infrastructure.database import get_async_session, async_session_maker
 
 __all__ = [
-    "app",
-    "catch_exception_middleware",
+    "app_object",
     "get_async_session",
     "async_session_maker"
 ]

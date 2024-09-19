@@ -12,12 +12,12 @@ __all__ = [
 class StationBase(BaseModel):
     id: int
     name: str
-    longitude: str
-    latitude: str
+    longitude: str | None
+    latitude: str | None
     line_id: int
     city_id: int
-    first_neighbour_id: int
-    second_neighbour_id: int
+    first_neighbour_id: int | None
+    second_neighbour_id: int | None
     is_favourite: bool
     radius: int
 

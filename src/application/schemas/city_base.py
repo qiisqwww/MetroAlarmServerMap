@@ -10,3 +10,6 @@ class CityBase(BaseModel):
     name: str
     name_eng: str
     alias: str
+
+    class Config:
+        from_attributes = True

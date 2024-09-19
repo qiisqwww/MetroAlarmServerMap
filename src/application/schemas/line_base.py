@@ -8,6 +8,9 @@ __all__ = [
 class LineBase(BaseModel):
     id: int
     name: str
-    line_id: int
+    city_id: int
     alias: str
     logo_path: str
+
+    class Config:
+        from_attributes = True

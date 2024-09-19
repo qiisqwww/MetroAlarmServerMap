@@ -17,6 +17,8 @@ services:
     depends_on:
       postgres_map:
         condition: service_healthy
+    ports:
+      - "80:8080"
 
 
   postgres_map:
