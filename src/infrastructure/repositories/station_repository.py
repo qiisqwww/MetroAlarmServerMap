@@ -1,4 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql import select
 
 from src.infrastructure.repositories import Repository
 from src.application.repositories import IStationRepository
@@ -19,3 +20,11 @@ class StationRepository(Repository, IStationRepository):
     async def insert_stations(self, stations: list[Station]) -> None:
         self._session.add_all(stations)
         await self._session.commit()
+
+    async def get_stations(self) -> list[Station]:
+        stmt = select(self._model)
+        return [station for station in await self._session.scalars(stmt)]
+
+    async def get_station_by_city_id(self, city_id: int) -> list[Station]:
+        stmt = select(self._model).where(self._model.city_id == city_id)
+        return [station for station in await self._session.scalars(stmt)]

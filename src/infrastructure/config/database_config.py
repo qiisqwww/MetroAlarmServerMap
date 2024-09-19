@@ -5,8 +5,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import select
 
 from src.infrastructure import async_session_maker
-from src.entities import City, Line, Station
 from src.application import CityAlias
+from src.entities import City, Line, Station
+
 
 __all__ = [
     "set_database_base_values"
