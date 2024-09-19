@@ -49,6 +49,7 @@ async def insert_cities_into_database(session: AsyncSession) -> list[City]:
                 alias=map_data["city"]["alias"]
             )
             session.add(city)
+            await session.commit()
 
     # Returning data about cities
     stmt = select(City)

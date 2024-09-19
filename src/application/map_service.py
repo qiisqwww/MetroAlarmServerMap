@@ -17,7 +17,6 @@ class MapService:
     session: AsyncSession
 
     def __init__(self, session: AsyncSession) -> None:
-        self.model = CityStationsMap
         self.session = session
 
     # Now we do not search for user's favourite stations cuz auth microservice currently is not working
