@@ -9,7 +9,9 @@ from src.infrastructure.get_service import get_db_prefil_service
 
 async def main() -> None:
     configurate_logger()
-    await get_db_prefil_service().prefil_db()
+
+    prefil_db_service = await get_db_prefil_service()
+    await prefil_db_service.prefil_db()
 
     server_config = uvicorn.Config(app, host=HTTP_HOST, port=HTTP_PORT)
     server = uvicorn.Server(server_config)

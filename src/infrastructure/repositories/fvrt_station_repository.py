@@ -21,10 +21,17 @@ class FvrtStationRepository(Repository, IFvrtStationRepository):
         self._session.add(UserFavouriteStation(station_id=station_id, user_id=user_id))
         await self._session.commit()
 
-    async def remove_fvrt_station(self, user_fvrt_station: UserFavouriteStation) -> None:
+    async def delete_fvrt_station(self, user_fvrt_station: UserFavouriteStation) -> None:
         await self._session.delete(user_fvrt_station)
         await self._session.commit()
 
     async def get_user_fvrt_stations(self, user_id: int) -> list[UserFavouriteStation]:
         stmt = select(self._model).where(self._model.user_id == user_id)
         return [fvrt_station for fvrt_station in await self._session.scalars(stmt)]
+
+    async def find_user_fvrt_station(self, station_id: int, user_id: int) -> UserFavouriteStation | None:
+        stmt = select(self._model).where(
+            self._model.user_id == user_id,
+            self._model.station_id == station_id
+        )
+        return await self._session.scalar(stmt)

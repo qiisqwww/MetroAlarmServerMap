@@ -8,11 +8,16 @@ from src.infrastructure.repositories import (
     CityRepository,
     FvrtStationRepository
 )
-from src.application.services import MapService, DBPrefillService
+from src.application.services import (
+    MapService,
+    DBPrefillService,
+    FvrtStationsService
+)
 
 __all__ = [
     "get_map_service",
-    "get_db_prefil_service"
+    "get_db_prefil_service",
+    "get_fvrt_stations_service"
 ]
 
 
@@ -25,10 +30,17 @@ def get_map_service(session: AsyncSession = Depends(get_async_session)) -> MapSe
     )
 
 
-def get_db_prefil_service() -> DBPrefillService:
+async def get_db_prefil_service() -> DBPrefillService:
     async with async_session_maker() as session:
         return DBPrefillService(
             StationRepository(session),
             LineRepository(session),
             CityRepository(session),
         )
+
+
+def get_fvrt_stations_service(session: AsyncSession = Depends(get_async_session)) -> FvrtStationsService:
+    return FvrtStationsService(
+        StationRepository(session),
+        FvrtStationRepository(session)
+    )
