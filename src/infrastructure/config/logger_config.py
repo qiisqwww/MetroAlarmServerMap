@@ -1,6 +1,6 @@
 from loguru import logger
 
-from src.config import LOGGING_PATH
+from src.infrastructure.config import LOGGING_PATH
 
 __all__ = [
     "configurate_logger",

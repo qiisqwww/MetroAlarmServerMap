@@ -1,5 +1,3 @@
-from typing import List
-
 from pydantic import BaseModel
 
 from .station_base import StationBase

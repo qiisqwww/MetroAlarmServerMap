@@ -2,8 +2,8 @@ import asyncio
 
 import uvicorn
 
-from src.app import app
-from src.config import HTTP_HOST, HTTP_PORT, configurate_logger, set_database_base_values
+from src.infrastructure import app
+from src.infrastructure.config import HTTP_HOST, HTTP_PORT, configurate_logger
 
 
 async def main() -> None:

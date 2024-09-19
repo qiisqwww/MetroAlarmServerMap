@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Path
 
-from src.city_alias import CityAlias
-from src.config import (
+from src.application.city_alias import CityAlias
+from src.infrastructure.config import (
     MAP_VERSION,
     MSC_MAP_VERSION,
     SPB_MAP_VERSION

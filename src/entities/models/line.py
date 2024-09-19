@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 
-from src.database import Base
+from src.entities import Base
 
 __all__ = [
     "Line"

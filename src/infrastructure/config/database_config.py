@@ -4,9 +4,9 @@ from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import select
 
-from src.database import async_session_maker
-from src.models import City, Line, Station
-from src.city_alias import CityAlias
+from src.infrastructure import async_session_maker
+from src.entities import City, Line, Station
+from src.application import CityAlias
 
 __all__ = [
     "set_database_base_values"
@@ -67,9 +67,11 @@ async def insert_lines_into_database(session: AsyncSession) -> list[Line]:
             lines = []
             for line in map_data["lines"]:
                 lines.append(Line(
-                    id=int(line["id"]),
+                    id=line["id"],
+                    city_id=line["city_id"],
                     name=line["name"],
-                    alias=line["alias"]
+                    alias=line["alias"],
+                    logo_path=line["path_logo"]
                 ))
             session.add_all(lines)
             await session.commit()
@@ -97,8 +99,8 @@ async def insert_stations_into_database(session: AsyncSession) -> list[Station]:
                     longitude=station["longitude"],
                     line_id=station["line_id"],
                     city_id=map_data["city"]["id"],
-                    first_neighbour_id=station["id_neighbour1"] if station["id_neighbour1"] != 0 else None,
-                    second_neighbour_id=station["id_neighbour2"] if station["id_neighbour2"] != 0 else None
+                    first_neighbour_id=station["id_neighbour1"],
+                    second_neighbour_id=station["id_neighbour2"]
                 ))
             session.add_all(stations)
             await session.commit()

@@ -1,8 +1,4 @@
-from typing import Self
-
 from pydantic import BaseModel
-
-from src.models import Line
 
 __all__ = [
     "LineBase"

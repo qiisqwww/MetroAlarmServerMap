@@ -2,7 +2,7 @@ from typing import Self
 
 from pydantic import BaseModel
 
-from src.models import Station
+from src.entities.models import Station
 
 __all__ = [
     "StationBase"
