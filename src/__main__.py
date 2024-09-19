@@ -4,11 +4,12 @@ import uvicorn
 
 from src.infrastructure import app
 from src.infrastructure.config import HTTP_HOST, HTTP_PORT, configurate_logger
+from src.infrastructure.get_service import get_db_prefil_service
 
 
 async def main() -> None:
     configurate_logger()
-    # await set_database_base_values()
+    await get_db_prefil_service().prefil_db()
 
     server_config = uvicorn.Config(app, host=HTTP_HOST, port=HTTP_PORT)
     server = uvicorn.Server(server_config)

@@ -1,15 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from src.infrastructure.database import get_async_session
-from src.infrastructure.repositories import (
-    StationRepository,
-    LineRepository,
-    CityRepository,
-    FvrtStationRepository
-)
+from src.infrastructure.get_service import get_map_service
 from src.application.schemas import CityStationsMap, CitiesStationsMap
 from src.application import MapService
 from src.application import CityAlias
@@ -17,15 +9,6 @@ from src.application import CityAlias
 __all__ = [
     "map_router"
 ]
-
-
-def get_map_service(session: AsyncSession = Depends(get_async_session)) -> MapService:
-    return MapService(
-        StationRepository(session),
-        LineRepository(session),
-        CityRepository(session),
-        FvrtStationRepository(session)
-    )
 
 
 map_router = APIRouter()

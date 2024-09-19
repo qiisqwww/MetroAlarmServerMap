@@ -1,4 +1,4 @@
-from .map_service import MapService
+from src.application.services import MapService
 from .city_alias import CityAlias
 
 __all__ = [
