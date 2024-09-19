@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from src.infrastructure.config import DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_HOST
+from src.config import DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_HOST
 
 __all__ = [
     "get_async_session",

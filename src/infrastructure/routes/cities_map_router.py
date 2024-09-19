@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Path
 from src.infrastructure.get_service import get_map_service
 from src.application.schemas import CityStationsMap, CitiesStationsMap
 from src.application import MapService
-from src.application import CityAlias
+from src.application.city_alias import CityAlias
 
 __all__ = [
     "map_router"

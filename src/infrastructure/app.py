@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from src.infrastructure.config import DEBUG, PROJECT_NAME, DOCS_URL, OPENAPI_URL
+from src.config import DEBUG, PROJECT_NAME, DOCS_URL, OPENAPI_URL
 from src.infrastructure import catch_exception_middleware
 from src.infrastructure.routes import root_router
 

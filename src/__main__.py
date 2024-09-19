@@ -3,7 +3,7 @@ import asyncio
 import uvicorn
 
 from src.infrastructure import app
-from src.infrastructure.config import HTTP_HOST, HTTP_PORT, configurate_logger
+from src.config import HTTP_HOST, HTTP_PORT, configurate_logger
 from src.infrastructure.get_service import get_db_prefil_service
 
 

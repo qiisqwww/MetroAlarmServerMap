@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from src.entities import Base
+from src.entities.declarative_base import Base
 
 __all__ = [
     "UserFavouriteStation"

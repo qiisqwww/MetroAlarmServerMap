@@ -6,7 +6,7 @@ from src.application.repositories import (
     ILineRepository,
     ICityRepository
 )
-from src.application import CityAlias
+from src.application.city_alias import CityAlias
 from src.entities import City, Line, Station
 
 __all__ = [

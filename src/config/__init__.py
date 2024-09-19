@@ -16,7 +16,6 @@ from .config import (
     SPB_MAP_VERSION
 )
 from .logger_config import configurate_logger
-from .database_config import set_database_base_values
 
 __all__ = [
     "DEBUG",
@@ -34,6 +33,5 @@ __all__ = [
     "MAP_VERSION",
     "MSC_MAP_VERSION",
     "SPB_MAP_VERSION",
-    "configurate_logger",
-    "set_database_base_values"
+    "configurate_logger"
 ]

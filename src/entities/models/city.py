@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
-from src.entities import Base
+
+from src.entities.declarative_base import Base
 
 __all__ = [
     "City"
