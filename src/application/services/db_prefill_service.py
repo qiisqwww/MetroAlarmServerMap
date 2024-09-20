@@ -29,7 +29,7 @@ class DBPrefillService:
         self._line_repository = line_repository
         self._city_repository = city_repository
 
-    async def prefil_db(self) -> None:
+    async def prefill_db(self) -> None:
         if await self._database_already_filled():
             logger.info("Database already filled. Skipping process...")
             return
