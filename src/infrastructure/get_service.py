@@ -16,7 +16,7 @@ from src.application.services import (
 
 __all__ = [
     "get_map_service",
-    "get_db_prefil_service",
+    "get_db_prefill_service",
     "get_fvrt_stations_service"
 ]
 
@@ -30,7 +30,7 @@ def get_map_service(session: AsyncSession = Depends(get_async_session)) -> MapSe
     )
 
 
-async def get_db_prefil_service() -> DBPrefillService:
+async def get_db_prefill_service() -> DBPrefillService:
     async with async_session_maker() as session:
         return DBPrefillService(
             StationRepository(session),
