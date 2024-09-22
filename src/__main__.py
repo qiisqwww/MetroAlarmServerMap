@@ -2,7 +2,7 @@ import asyncio
 
 import uvicorn
 
-from src.infrastructure import app_object
+from src.infrastructure.presentation import app_object
 from src.config import HTTP_HOST, HTTP_PORT, configurate_logger
 from src.infrastructure.get_service import get_db_prefil_service
 
