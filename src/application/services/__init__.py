@@ -1,4 +1,4 @@
-from .map_service import MapService
+from .map_service import MapService, CityWasNotFoundException
 from .db_prefill_service import DBPrefillService
 from .fvrt_stations_service import (
     FvrtStationsService,
@@ -9,6 +9,7 @@ from .fvrt_stations_service import (
 
 __all__ = [
     "MapService",
+    "CityWasNotFoundException",
     "DBPrefillService",
     "FvrtStationsService",
     "StationDoesNotExistException",
