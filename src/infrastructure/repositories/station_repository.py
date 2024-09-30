@@ -25,6 +25,10 @@ class StationRepository(Repository, IStationRepository):
         stmt = select(self._model)
         return [station for station in await self._session.scalars(stmt)]
 
-    async def get_station_by_city_id(self, city_id: int) -> list[Station]:
+    async def get_stations_by_city_id(self, city_id: int) -> list[Station]:
         stmt = select(self._model).where(self._model.city_id == city_id)
         return [station for station in await self._session.scalars(stmt)]
+
+    async def find_station_by_id(self, station_id: int) -> Station | None:
+        stmt = select(self._model).where(self._model.id == station_id)
+        return await self._session.scalar(stmt)

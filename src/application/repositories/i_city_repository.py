@@ -17,5 +17,5 @@ class ICityRepository(ABC):
         ...
 
     @abstractmethod
-    async def get_city_by_name(self, city_name: str) -> City:
+    async def get_city_by_name(self, city_name: str) -> City | None:
         ...

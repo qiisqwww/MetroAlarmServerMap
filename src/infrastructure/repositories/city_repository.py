@@ -25,6 +25,6 @@ class CityRepository(Repository, ICityRepository):
         stmt = select(self._model)
         return [city for city in await self._session.scalars(stmt)]
 
-    async def get_city_by_name(self, city_name: str) -> City:
+    async def get_city_by_name(self, city_name: str) -> City | None:
         stmt = select(City).where(City.name == city_name)
         return await self._session.scalar(stmt)

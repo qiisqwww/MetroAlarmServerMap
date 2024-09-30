@@ -62,9 +62,10 @@ class MapService:
         )
 
     async def get_map_for_city(self, city_alias: CityAlias, user_id: int = None) -> CityStationsMap:
+        # TODO: ADD EXCEPTION IF CITY NOT FOUND
         raw_city = await self._city_repository.get_city_by_name(city_alias.translation)
         raw_lines = await self._line_repository.get_lines_by_city_id(raw_city.id)
-        raw_stations = await self._station_repository.get_station_by_city_id(raw_city.id)
+        raw_stations = await self._station_repository.get_stations_by_city_id(raw_city.id)
 
         if not user_id:
             return CityStationsMap(

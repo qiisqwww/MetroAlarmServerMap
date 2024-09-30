@@ -1,8 +1,31 @@
 from src.application.repositories import IStationRepository, IFvrtStationRepository
 
 __all__ = [
+    "StationDoesNotExistException",
+    "FvrtStationAlreadySetException",
+    "FvrtStationWasNotFoundException",
     "FvrtStationsService"
 ]
+
+
+class StationDoesNotExistException(Exception):
+    """
+    Raised when trying to make station favourite, but it does not exist.
+    """
+
+
+class FvrtStationAlreadySetException(Exception):
+    """
+    Raised when user is trying to make station favourite, but it has already been
+    set to favourite before.
+    """
+
+
+class FvrtStationWasNotFoundException(Exception):
+    """
+    Raised when user is trying to remove favourite station which does not exist,
+    or it wasn't set as favourite before.
+    """
 
 
 class FvrtStationsService:
@@ -18,13 +41,19 @@ class FvrtStationsService:
         self._fvrt_station_repository = fvrt_station_repository
 
     async def set_favourite_station(self, station_id: int, user_id: int) -> None:
+        station = await self._station_repository.find_station_by_id(station_id)
+        if station is None:
+            raise StationDoesNotExistException
+
         fvrt_station = await self._fvrt_station_repository.find_user_fvrt_station(station_id, user_id)
         if fvrt_station:
-            return
+            raise FvrtStationAlreadySetException
+
         await self._fvrt_station_repository.insert_fvrt_station(station_id, user_id)
 
     async def remove_favourite_station(self, station_id: int, user_id: int) -> None:
         fvrt_station = await self._fvrt_station_repository.find_user_fvrt_station(station_id, user_id)
         if not fvrt_station:
-            return
+            raise FvrtStationWasNotFoundException
+
         await self._fvrt_station_repository.delete_fvrt_station(fvrt_station)
