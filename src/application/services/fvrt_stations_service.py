@@ -1,4 +1,5 @@
 from src.application.repositories import IStationRepository, IFvrtStationRepository
+from src.application.schemas import StationBase
 
 __all__ = [
     "StationDoesNotExistException",
@@ -40,7 +41,7 @@ class FvrtStationsService:
         self._station_repository = station_repository
         self._fvrt_station_repository = fvrt_station_repository
 
-    async def set_favourite_station(self, station_id: int, user_id: int) -> None:
+    async def set_favourite_station(self, station_id: int, user_id: int) -> StationBase:
         station = await self._station_repository.find_station_by_id(station_id)
         if station is None:
             raise StationDoesNotExistException
@@ -48,12 +49,18 @@ class FvrtStationsService:
         fvrt_station = await self._fvrt_station_repository.find_user_fvrt_station(station_id, user_id)
         if fvrt_station:
             raise FvrtStationAlreadySetException
-
         await self._fvrt_station_repository.insert_fvrt_station(station_id, user_id)
 
-    async def remove_favourite_station(self, station_id: int, user_id: int) -> None:
+        return StationBase.from_orm_model(station, True)
+
+    async def remove_favourite_station(self, station_id: int, user_id: int) -> StationBase:
+        station = await self._station_repository.find_station_by_id(station_id)
+        if station is None:
+            raise StationDoesNotExistException
+
         fvrt_station = await self._fvrt_station_repository.find_user_fvrt_station(station_id, user_id)
         if not fvrt_station:
             raise FvrtStationWasNotFoundException
-
         await self._fvrt_station_repository.delete_fvrt_station(fvrt_station)
+
+        return StationBase.from_orm_model(station, False)

@@ -9,6 +9,7 @@ from src.application.services import (
     FvrtStationAlreadySetException,
     FvrtStationWasNotFoundException
 )
+from src.application.schemas import StationBase
 
 
 __all__ = [
@@ -26,9 +27,9 @@ async def set_fvrt_station(
         station_id: Annotated[int, Query()],
         user_id: Annotated[int, Query()],
         fvrt_stations_service: FvrtStationsService = Depends(get_fvrt_stations_service)
-) -> None:  # TODO: Return changed station data
+) -> StationBase:
     try:
-        await fvrt_stations_service.set_favourite_station(station_id, user_id)
+        updated_station = await fvrt_stations_service.set_favourite_station(station_id, user_id)
     except StationDoesNotExistException as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -40,18 +41,22 @@ async def set_fvrt_station(
             detail="Trying to set favourite station which has already been set so"
         ) from e
 
+    return updated_station
+
 
 @fvrt_stations_router.patch("/remove")
 async def remove_fvrt_station(
         station_id: Annotated[int, Query()],
         user_id: Annotated[int, Query()],
         fvrt_stations_service: FvrtStationsService = Depends(get_fvrt_stations_service)
-) -> None:  # TODO: Return changed station data
+) -> StationBase:
     try:
-        await fvrt_stations_service.remove_favourite_station(station_id, user_id)
+        updated_station = await fvrt_stations_service.remove_favourite_station(station_id, user_id)
     except FvrtStationWasNotFoundException as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Trying to remove favourite station which was not set favourite (or station with id {station_id}"
+            detail=f"Trying to remove favourite station which was not set favourite (or station with id {station_id} "
                    f"does not exist)"
         ) from e
+
+    return updated_station
