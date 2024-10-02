@@ -22,7 +22,7 @@ class MockFvrtStationRepository(IFvrtStationRepository):
 
     async def find_user_fvrt_station(self, station_id: int, user_id: int) -> UserFavouriteStation | None:
         for fvrt_station in self.mocked_fvrt_stations:
-            if fvrt_station.id == station_id:
+            if fvrt_station.station_id == station_id and fvrt_station.user_id == user_id:
                 return fvrt_station
 
         return None
