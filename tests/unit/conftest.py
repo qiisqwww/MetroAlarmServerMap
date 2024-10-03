@@ -1,6 +1,7 @@
 import pytest
 
 from src.application.services import FvrtStationsService, MapService
+
 from tests.unit.mocks import (
     MockStationRepository,
     MockFvrtStationRepository,
