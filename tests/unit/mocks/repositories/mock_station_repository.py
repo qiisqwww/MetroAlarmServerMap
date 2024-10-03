@@ -9,7 +9,10 @@ __all__ = [
 
 
 class MockStationRepository(IStationRepository):
-    mocked_stations: list[Station] = stations_list
+    mocked_stations: list[Station]
+
+    def __init__(self) -> None:
+        self.mocked_stations = stations_list.copy()
 
     async def find_station_by_id(self, station_id: int) -> Station | None:
         for station in self.mocked_stations:
@@ -19,11 +22,12 @@ class MockStationRepository(IStationRepository):
         return None
 
     async def get_stations_by_city_id(self, city_id: int) -> list[Station]:
+        stations = []
         for station in self.mocked_stations:
             if station.city_id == city_id:
-                return station
+                stations.append(station)
 
-        return None
+        return stations
 
     async def get_stations(self) -> list[Station]:
         return self.mocked_stations

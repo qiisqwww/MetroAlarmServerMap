@@ -14,7 +14,8 @@ stations_list = [
             line_id=1001,
             city_id=1,
             first_neighbour_id=None,
-            second_neighbour_id=10002
+            second_neighbour_id=10002,
+            radius=400
         ),
         Station(
             id=10002,
@@ -24,7 +25,8 @@ stations_list = [
             line_id=1001,
             city_id=1,
             first_neighbour_id=10001,
-            second_neighbour_id=10003
+            second_neighbour_id=10003,
+            radius=400
         ),
         Station(
             id=10003,
@@ -34,6 +36,7 @@ stations_list = [
             line_id=1001,
             city_id=1,
             first_neighbour_id=10002,
-            second_neighbour_id=10004
+            second_neighbour_id=10004,
+            radius=400
         )
     ]
