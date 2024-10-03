@@ -1,9 +1,9 @@
 import pytest
 
-from src.application.services import FvrtStationsService
+from src.application.services import FvrtStationsService, MapService
 from tests.unit.mocks import (
     MockStationRepository,
-    MockFvrtStationRepository
+    MockFvrtStationRepository,
 )
 
 
@@ -15,3 +15,10 @@ def fvrt_stations_service() -> FvrtStationsService:
     )
 
     return fvrt_stations_service
+
+
+@pytest.fixture()
+def map_service() -> MapService:
+    map_service = MapService(
+
+    )
