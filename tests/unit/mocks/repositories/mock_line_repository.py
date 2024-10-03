@@ -4,11 +4,11 @@ from src.entities import Line
 from tests.unit.mocks.data import lines_list
 
 __all__ = [
-    "MockILineRepository"
+    "MockLineRepository"
 ]
 
 
-class MockILineRepository(ILineRepository):
+class MockLineRepository(ILineRepository):
     mocked_lines: list[Line]
 
     def __init__(self) -> None:

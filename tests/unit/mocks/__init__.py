@@ -1,9 +1,13 @@
 from .repositories import (
     MockFvrtStationRepository,
-    MockStationRepository
+    MockStationRepository,
+    MockCityRepository,
+    MockLineRepository
 )
 
 __all__ = [
     "MockStationRepository",
-    "MockFvrtStationRepository"
+    "MockFvrtStationRepository",
+    "MockCityRepository",
+    "MockLineRepository",
 ]
