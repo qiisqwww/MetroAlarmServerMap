@@ -1,6 +1,8 @@
 from src.application.repositories import ILineRepository
 from src.entities import Line
 
+from tests.unit.mocks.data import lines_list
+
 __all__ = [
     "MockILineRepository"
 ]
@@ -10,7 +12,7 @@ class MockILineRepository(ILineRepository):
     mocked_lines: list[Line]
 
     def __init__(self) -> None:
-        self.mocked_lines = []  # i know
+        self.mocked_lines = lines_list.copy()
 
     async def insert_lines(self, lines: list[Line]) -> None:
         self.mocked_lines.extend(lines)

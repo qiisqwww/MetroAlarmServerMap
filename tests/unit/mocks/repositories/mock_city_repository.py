@@ -1,6 +1,8 @@
 from src.application.repositories import ICityRepository
 from src.entities import City
 
+from tests.unit.mocks.data import cities_list
+
 __all__ = [
     "MockCityRepository",
 ]
@@ -10,7 +12,7 @@ class MockCityRepository(ICityRepository):
     mocked_cities: list[City]
 
     def __init__(self) -> None:
-        self.mocked_cities = []  # i know
+        self.mocked_cities = cities_list.copy()
 
     async def insert_city(self, city: City) -> None:
         self.mocked_cities.append(city)

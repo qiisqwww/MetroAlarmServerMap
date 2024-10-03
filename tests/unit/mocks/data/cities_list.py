@@ -11,5 +11,11 @@ cities_list = [
         name="Москва",
         name_eng="Moscow",
         alias="msc"
+    ),
+    City(
+        id=2,
+        name="Санкт-Петербург",
+        name_eng="Saint-Petersburg",
+        alias="spb"
     )
 ]
