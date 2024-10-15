@@ -1,9 +1,14 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path, Query, HTTPException, status
-from src.infrastructure.get_service import get_map_service
+from src.infrastructure.get_service import get_map_service, get_user_service
 from src.application.schemas import CityStationsMap, CitiesStationsMap
-from src.application.services import MapService, CityWasNotFoundException
+from src.application.services import (
+    MapService,
+    CityWasNotFoundException,
+    UserService,
+    CannotFindUserExistsException
+)
 from src.application.city_alias import CityAlias
 
 __all__ = [
@@ -26,8 +31,23 @@ async def get_full_map(
 async def get_city_map(
         city_alias: Annotated[CityAlias, Path(title="Alias of the city")],
         user_id: Annotated[int, Query()] = None,
-        map_service: MapService = Depends(get_map_service)
+        map_service: MapService = Depends(get_map_service),
+        user_service: UserService = Depends(get_user_service)
 ) -> CityStationsMap:
+    try:
+        user_exists = await user_service.find_user_exists(user_id)
+    except CannotFindUserExistsException:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Cannot find whether user with id {user_id} exists or not. Try again later"
+        )
+
+    if not user_exists:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {user_id} was not registered"
+        )
+
     try:
         city_map = await map_service.get_map_for_city(city_alias, user_id)
     except CityWasNotFoundException as e:

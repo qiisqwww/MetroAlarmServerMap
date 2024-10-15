@@ -6,7 +6,7 @@ from .fvrt_stations_service import (
     FvrtStationAlreadySetException,
     FvrtStationWasNotFoundException
 )
-from .user_service import UserService
+from .user_service import UserService, CannotFindUserExistsException
 
 __all__ = [
     "MapService",
@@ -16,5 +16,6 @@ __all__ = [
     "StationDoesNotExistException",
     "FvrtStationAlreadySetException",
     "FvrtStationWasNotFoundException",
-    "UserService"
+    "UserService",
+    "CannotFindUserExistsException"
 ]

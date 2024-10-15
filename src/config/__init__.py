@@ -13,7 +13,8 @@ from .config import (
     DB_USER,
     MAP_VERSION,
     MSC_MAP_VERSION,
-    SPB_MAP_VERSION
+    SPB_MAP_VERSION,
+    FIND_USER_EXISTS_URL
 )
 from .logger_config import configurate_logger
 
@@ -33,5 +34,6 @@ __all__ = [
     "MAP_VERSION",
     "MSC_MAP_VERSION",
     "SPB_MAP_VERSION",
+    "FIND_USER_EXISTS_URL",
     "configurate_logger"
 ]

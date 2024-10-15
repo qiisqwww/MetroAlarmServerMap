@@ -8,6 +8,7 @@ from src.infrastructure.repositories import (
     CityRepository,
     FvrtStationRepository
 )
+from src.infrastructure.api import UserAPI
 from src.application.services import (
     MapService,
     DBPrefillService,
@@ -49,5 +50,5 @@ def get_fvrt_stations_service(session: AsyncSession = Depends(get_async_session)
 
 def get_user_service() -> UserService:
     return UserService(
-
+        UserAPI()
     )

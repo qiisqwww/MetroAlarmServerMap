@@ -17,7 +17,8 @@ __all__ = [
     "DB_USER",
     "MAP_VERSION",
     "MSC_MAP_VERSION",
-    "SPB_MAP_VERSION"
+    "SPB_MAP_VERSION",
+    "FIND_USER_EXISTS_URL"
 ]
 
 
@@ -41,3 +42,5 @@ DB_HOST: str = StrEnv("DB_HOST")
 MAP_VERSION: str = StrEnv("MAP_VERSION")
 MSC_MAP_VERSION: str = StrEnv("MSC_MAP_VERSION")
 SPB_MAP_VERSION: str = StrEnv("SPB_MAP_VERSION")
+
+FIND_USER_EXISTS_URL: str = StrEnv("FIND_USER_EXISTS")
