@@ -19,7 +19,8 @@ from src.application.services import (
 __all__ = [
     "get_map_service",
     "get_db_prefill_service",
-    "get_fvrt_stations_service"
+    "get_fvrt_stations_service",
+    "get_user_service"
 ]
 
 

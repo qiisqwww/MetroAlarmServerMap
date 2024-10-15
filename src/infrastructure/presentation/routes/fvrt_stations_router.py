@@ -2,12 +2,14 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 
-from src.infrastructure.get_service import get_fvrt_stations_service
+from src.infrastructure.get_service import get_fvrt_stations_service, get_user_service
 from src.application.services import (
     FvrtStationsService,
     StationDoesNotExistException,
     FvrtStationAlreadySetException,
-    FvrtStationWasNotFoundException
+    FvrtStationWasNotFoundException,
+    UserService,
+    CannotFindUserExistsException
 )
 from src.application.schemas import StationBase
 
@@ -26,8 +28,23 @@ fvrt_stations_router = APIRouter(
 async def set_fvrt_station(
         station_id: Annotated[int, Query()],
         user_id: Annotated[int, Query()],
-        fvrt_stations_service: FvrtStationsService = Depends(get_fvrt_stations_service)
+        fvrt_stations_service: FvrtStationsService = Depends(get_fvrt_stations_service),
+        user_service: UserService = Depends(get_user_service)
 ) -> StationBase:
+    try:
+        user_exists = await user_service.find_user_exists(user_id)
+    except CannotFindUserExistsException:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Cannot find whether user with id {user_id} exists or not. Try again later"
+        )
+
+    if not user_exists:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {user_id} was not registered"
+        )
+
     try:
         updated_station = await fvrt_stations_service.set_favourite_station(station_id, user_id)
     except StationDoesNotExistException as e:
@@ -48,8 +65,23 @@ async def set_fvrt_station(
 async def remove_fvrt_station(
         station_id: Annotated[int, Query()],
         user_id: Annotated[int, Query()],
-        fvrt_stations_service: FvrtStationsService = Depends(get_fvrt_stations_service)
+        fvrt_stations_service: FvrtStationsService = Depends(get_fvrt_stations_service),
+        user_service: UserService = Depends(get_user_service)
 ) -> StationBase:
+    try:
+        user_exists = await user_service.find_user_exists(user_id)
+    except CannotFindUserExistsException:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Cannot find whether user with id {user_id} exists or not. Try again later"
+        )
+
+    if not user_exists:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {user_id} was not registered"
+        )
+
     try:
         updated_station = await fvrt_stations_service.remove_favourite_station(station_id, user_id)
     except FvrtStationWasNotFoundException as e:
