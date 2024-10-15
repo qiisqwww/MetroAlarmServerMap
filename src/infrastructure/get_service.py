@@ -11,7 +11,8 @@ from src.infrastructure.repositories import (
 from src.application.services import (
     MapService,
     DBPrefillService,
-    FvrtStationsService
+    FvrtStationsService,
+    UserService
 )
 
 __all__ = [
@@ -43,4 +44,10 @@ def get_fvrt_stations_service(session: AsyncSession = Depends(get_async_session)
     return FvrtStationsService(
         StationRepository(session),
         FvrtStationRepository(session)
+    )
+
+
+def get_user_service() -> UserService:
+    return UserService(
+
     )

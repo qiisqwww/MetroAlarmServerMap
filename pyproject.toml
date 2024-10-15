@@ -11,6 +11,7 @@ alembic = "^1.13.3"
 asyncpg = "^0.29.0"
 fastapi = {extras = ["all"], version = "^0.115.0"}
 loguru = "^0.7.2"
+aiohttp = "^3.10.10"
 
 
 [tool.poetry.group.test.dependencies]
