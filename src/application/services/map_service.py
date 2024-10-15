@@ -51,8 +51,8 @@ class MapService:
 
         if not user_id:
             return CitiesStationsMap(
-                cities=[CityBase.from_orm(raw_city) for raw_city in raw_cities],
-                lines=[LineBase.from_orm(raw_line) for raw_line in raw_lines],
+                cities=[CityBase.model_validate(raw_city) for raw_city in raw_cities],
+                lines=[LineBase.model_validate(raw_line) for raw_line in raw_lines],
                 stations=[StationBase.from_orm_model(raw_station) for raw_station in raw_stations]
             )
 
@@ -60,8 +60,8 @@ class MapService:
         fvrt_stations_ids = [fvrt_station.station_id for fvrt_station in fvrt_stations]
 
         return CitiesStationsMap(
-            cities=[CityBase.from_orm(raw_city) for raw_city in raw_cities],
-            lines=[LineBase.from_orm(raw_line) for raw_line in raw_lines],
+            cities=[CityBase.model_validate(raw_city) for raw_city in raw_cities],
+            lines=[LineBase.model_validate(raw_line) for raw_line in raw_lines],
             stations=[StationBase.from_orm_model(
                 raw_station,
                 raw_station.id in fvrt_stations_ids
@@ -77,8 +77,8 @@ class MapService:
 
         if not user_id:
             return CityStationsMap(
-                city=CityBase.from_orm(raw_city),
-                lines=[LineBase.from_orm(raw_line) for raw_line in raw_lines],
+                city=CityBase.model_validate(raw_city),
+                lines=[LineBase.model_validate(raw_line) for raw_line in raw_lines],
                 stations=[StationBase.from_orm_model(raw_station) for raw_station in raw_stations]
             )
 
@@ -86,8 +86,8 @@ class MapService:
         fvrt_stations_ids = [fvrt_station.station_id for fvrt_station in fvrt_stations]
 
         return CityStationsMap(
-            city=CityBase.from_orm(raw_city),
-            lines=[LineBase.from_orm(raw_line) for raw_line in raw_lines],
+            city=CityBase.model_validate(raw_city),
+            lines=[LineBase.model_validate(raw_line) for raw_line in raw_lines],
             stations=[StationBase.from_orm_model(
                 raw_station,
                 raw_station.id in fvrt_stations_ids
