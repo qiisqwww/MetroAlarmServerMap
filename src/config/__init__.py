@@ -14,7 +14,8 @@ from .config import (
     MAP_VERSION,
     MSC_MAP_VERSION,
     SPB_MAP_VERSION,
-    FIND_USER_EXISTS_URL
+    FIND_USER_EXISTS_URL,
+    SECRET_INSIDE_KEY
 )
 from .logger_config import configurate_logger
 
@@ -35,5 +36,6 @@ __all__ = [
     "MSC_MAP_VERSION",
     "SPB_MAP_VERSION",
     "FIND_USER_EXISTS_URL",
+    "SECRET_INSIDE_KEY",
     "configurate_logger"
 ]

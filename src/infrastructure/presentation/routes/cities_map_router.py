@@ -22,8 +22,24 @@ map_router = APIRouter()
 @map_router.get("/full")
 async def get_full_map(
         user_id: Annotated[int, Query()] = None,
-        map_service: MapService = Depends(get_map_service)
+        map_service: MapService = Depends(get_map_service),
+        user_service: UserService = Depends(get_user_service)
 ) -> CitiesStationsMap:
+    if user_id:
+        try:
+            user_exists = await user_service.find_user_exists(user_id)
+        except CannotFindUserExistsException:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Cannot find whether user with id {user_id} exists or not. Try again later"
+            )
+
+        if not user_exists:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User with id {user_id} was not registered"
+            )
+
     return await map_service.get_full_map(user_id)
 
 
@@ -34,19 +50,20 @@ async def get_city_map(
         map_service: MapService = Depends(get_map_service),
         user_service: UserService = Depends(get_user_service)
 ) -> CityStationsMap:
-    try:
-        user_exists = await user_service.find_user_exists(user_id)
-    except CannotFindUserExistsException:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Cannot find whether user with id {user_id} exists or not. Try again later"
-        )
+    if user_id:
+        try:
+            user_exists = await user_service.find_user_exists(user_id)
+        except CannotFindUserExistsException:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Cannot find whether user with id {user_id} exists or not. Try again later"
+            )
 
-    if not user_exists:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"User with id {user_id} was not registered"
-        )
+        if not user_exists:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User with id {user_id} was not registered"
+            )
 
     try:
         city_map = await map_service.get_map_for_city(city_alias, user_id)
