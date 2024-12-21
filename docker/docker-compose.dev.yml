@@ -5,8 +5,6 @@ services:
     build:
       dockerfile: ./docker/Dockerfile.dev
       context: ../
-    networks:
-      - msa
     env_file:
       - ../.env/.dev.env
     command: ["/app/scripts/app.sh"]
@@ -19,12 +17,12 @@ services:
         condition: service_healthy
     ports:
       - "80:8080"
+    networks:
+      - msa
 
 
   postgres_map:
     image: postgres:16.1-alpine3.19
-    networks:
-      - msa
     restart: always
     env_file:
       - ../.env/.database.dev.env
@@ -32,10 +30,12 @@ services:
       - ../postgres/data:/var/lib/postgresql/data
       - ../postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - msa
 
 
 networks:
